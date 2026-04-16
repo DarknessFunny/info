@@ -18,6 +18,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body { background: var(--bg-deep); color: var(--white); font-family: 'Rubik', sans-serif; font-size: 15px; line-height: 1.65; }
+
 /* NAV */
 nav {
 position: sticky; top: 0; z-index: 100;
@@ -35,33 +36,89 @@ padding: 0 24px; height: 52px;
 .nav-links a { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray); text-decoration: none; padding: 5px 14px; border-radius: 8px; border: 1px solid transparent; transition: all 0.15s; }
 .nav-links a:hover { background: var(--panel); color: var(--white); }
 .nav-links a.active { color: var(--red); border-color: var(--border-red); }
+
 /* LAYOUT */
 .wiki-layout { display: grid; grid-template-columns: var(--sidebar-w) 1fr var(--toc-w); min-height: calc(100vh - 52px); max-width: 1220px; margin: 0 auto; }
+
 /* SIDEBAR */
-.sidebar { border-right: 1px solid var(--border); padding: 18px 0; position: sticky; top: 52px; height: calc(100vh - 52px); overflow-y: auto; }
+.sidebar {
+  border-right: 1px solid var(--border);
+  padding: 16px 0; /* Прижали контент чуть ближе к верху */
+  position: sticky;
+  top: 56px;
+  height: calc(100vh - 56px);
+  overflow-y: auto;
+}
+
 .sidebar::-webkit-scrollbar { width: 4px; }
 .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-.sb-group { margin-bottom: 4px; }
-.sb-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gray-dim); padding: 10px 16px 4px; display: block; }
-.sb-links { list-style: none; }
-.sb-link { display: block; padding: 6px 16px; color: var(--gray); text-decoration: none; font-size: 14px; transition: background 0.12s, color 0.12s; position: relative; cursor: pointer; }
-.sb-link:hover { background: var(--panel); color: var(--white); }
-.sb-link.active { background: var(--panel); color: var(--white); }
-.sb-link.active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--red); }
-/* NEW badge */
-.sb-badge {
-display: inline-block; margin-left: 7px;
-font-family: 'JetBrains Mono', monospace; font-size: 9px;
-letter-spacing: 0.05em; text-transform: uppercase;
-background: var(--red-dim); color: var(--red-bright);
-border: 1px solid var(--red-dim); border-radius: 4px;
-padding: 1px 5px; vertical-align: middle; line-height: 1.4;
+
+.sb-group { 
+  margin-bottom: 20px; /* Уменьшил расстояние между группами (Правила -> Структура) */
 }
+
+.sb-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--gray-dim);
+  padding: 0 20px 4px; /* Минимальный отступ под заголовком (ВИКИ, ПРАВИЛА...) */
+  display: block;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.sb-links { list-style: none; }
+
+.sb-link {
+  display: block;
+  padding: 5px 20px; /* Сделал пункты меню компактнее */
+  color: var(--gray);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.15s;
+  position: relative;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  margin-left: 0;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.sb-link:hover {
+  background: var(--panel-hover);
+  color: var(--white);
+}
+
+.sb-link.active {
+  background: var(--panel);
+  color: var(--white);
+  border-left-color: var(--red);
+  font-weight: 600;
+}
+
+.sb-badge {
+  display: inline-block;
+  margin-left: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--red-dim);
+  color: var(--red);
+  border-radius: 4px;
+  padding: 2px 6px;
+  vertical-align: middle;
+  line-height: 1.2;
+}
+
 /* CONTENT */
 .wiki-content { padding: 36px 48px; min-width: 0; }
 .breadcrumb { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gray-dim); margin-bottom: 20px; display: flex; align-items: center; gap: 5px; letter-spacing: 0.05em; }
 .breadcrumb a { color: var(--gray-dim); text-decoration: none; }
 .breadcrumb a:hover { color: var(--gray); }
+
 /* MARKDOWN RENDERED */
 .md-body h1 { font-family: 'Rubik', sans-serif; font-size: 28px; font-weight: 600; color: var(--white); padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
 .md-body h2 { font-family: 'Rubik', sans-serif; font-size: 20px; font-weight: 600; color: var(--white); margin: 28px 0 10px; scroll-margin-top: 72px; }
@@ -74,23 +131,28 @@ padding: 1px 5px; vertical-align: middle; line-height: 1.4;
 .md-body hr { border: none; border-top: 1px solid var(--border); margin: 28px 0; }
 .md-body code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: #2a2a2a; border: 1px solid var(--border); padding: 1px 6px; border-radius: 5px; color: var(--white); }
 .md-body strong { color: var(--white); }
+
 /* TABLE */
 .md-body table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
 .md-body th { background: var(--panel); color: var(--white); font-weight: 600; padding: 8px 14px; text-align: left; border: 1px solid var(--border); font-family: 'JetBrains Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
 .md-body td { padding: 7px 14px; border: 1px solid var(--border); color: var(--gray); }
 .md-body tr:hover td { background: rgba(255,255,255,0.015); }
+
 /* LOADING */
 .loading { color: var(--gray-dim); font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.1em; padding: 40px 0; }
+
 /* CALLOUT */
 .callout { background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--red); border-radius: 0 var(--radius) var(--radius) 0; padding: 12px 16px; margin: 16px 0; }
 .callout-title { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red); margin-bottom: 5px; }
 .callout p { margin: 0; font-size: 14px; color: var(--gray); }
+
 /* LINK CARDS */
 .link-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0; }
 .link-card { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 14px; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; color: var(--white); font-size: 14px; transition: background 0.12s, border-color 0.12s; cursor: pointer; }
 .link-card:hover { background: #242424; border-color: #3a3a3a; }
 .link-card.new-card { border-color: var(--border-red); }
 .link-card span { color: var(--gray-dim); }
+
 /* UPDATE BANNER */
 .update-banner {
 background: linear-gradient(135deg, rgba(180,53,53,0.08), rgba(180,53,53,0.03));
@@ -104,6 +166,7 @@ display: flex; align-items: flex-start; gap: 12px;
 .update-text { flex: 1; }
 .update-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red); margin-bottom: 4px; }
 .update-desc { font-size: 13px; color: var(--gray); line-height: 1.55; }
+
 /* TOC */
 .toc { border-left: 1px solid var(--border); padding: 22px 0 22px 18px; position: sticky; top: 52px; height: calc(100vh - 52px); overflow-y: auto; }
 .toc::-webkit-scrollbar { width: 4px; }
@@ -113,6 +176,7 @@ display: flex; align-items: flex-start; gap: 12px;
 .toc-list a { color: var(--gray-dim); text-decoration: none; display: block; padding: 3px 0; transition: color 0.12s; line-height: 1.4; font-size: 13px; }
 .toc-list a:hover { color: var(--gray); }
 .toc-list .toc-h3 { padding-left: 12px; font-size: 11px; }
+
 /* FOOTER */
 footer { border-top: 1px solid var(--border); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 .footer-logo { display: flex; align-items: center; gap: 8px; font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 0.15em; color: var(--gray); }
@@ -121,16 +185,114 @@ footer { border-top: 1px solid var(--border); padding: 20px 24px; display: flex;
 .footer-nav { display: flex; gap: 18px; list-style: none; }
 .footer-nav a { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gray-dim); text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; }
 .footer-nav a:hover { color: var(--gray); }
+
 .tab-pane { display: none; }
 .tab-pane.active { display: block; }
+
+/* ======================================== */
+/* 📱 MOBILE TAB SELECTOR (справа вверху) */
+/* ======================================== */
+.mobile-tab-selector {
+  display: none;
+  position: fixed;
+  top: 64px;
+  right: 16px;
+  z-index: 99;
+  width: auto;
+  max-width: 200px;
+}
+
+.tab-select {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  padding: 8px 32px 8px 12px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23B43535' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: border-color 0.15s;
+}
+
+.tab-select:focus {
+  outline: none;
+  border-color: var(--red);
+}
+
+.tab-select option {
+  background: var(--panel);
+  color: var(--white);
+  padding: 8px;
+}
+
+/* ======================================== */
+/* 📱 MEDIA QUERIES — АДАПТАЦИЯ ПОД ТЕЛЕФОНЫ */
+/* ======================================== */
 @media (max-width: 960px) {
-.wiki-layout { grid-template-columns: 1fr; }
-.sidebar, .toc { display: none; }
-.wiki-content { padding: 22px 16px; }
+  .wiki-layout { grid-template-columns: 1fr; }
+  .sidebar, .toc { display: none; }
+  
+  .wiki-content { 
+    padding: 24px 16px; 
+    padding-top: 76px; /* место для мобильного селектора */
+  }
+  
+  .nav { padding: 0 12px; }
+  .nav-links a { padding: 6px 10px; font-size: 10px; }
+  
+  .md-body h1 { font-size: 24px; }
+  .md-body h2 { font-size: 19px; margin: 24px 0 8px; }
+  .md-body h3 { font-size: 16px; }
+  
+  .md-body p, .md-body ul, .md-body ol { 
+    font-size: 15px; 
+    line-height: 1.8; 
+  }
+  
+  .md-body a { padding: 2px 0; }
+  
+  .link-cards { grid-template-columns: 1fr; }
+  .link-card { padding: 14px 16px; }
+  
+  .md-body table { 
+    display: block; 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch; 
+  }
+  
+  .update-banner { padding: 12px 14px; gap: 10px; }
+  
+  footer { 
+    flex-direction: column; 
+    align-items: flex-start; 
+    padding: 16px 12px; 
+  }
+  .footer-nav { gap: 14px; flex-wrap: wrap; }
+  .breadcrumb { flex-wrap: wrap; }
+  
+  /* Показываем мобильный селектор */
+  .mobile-tab-selector { display: block; }
+}
+
+@media (max-width: 480px) {
+  .mobile-tab-selector { right: 10px; top: 60px; }
+  .tab-select { font-size: 10px; padding: 7px 28px 7px 10px; max-width: 170px; }
+  .wiki-content { padding: 20px 12px; padding-top: 72px; }
+  .md-body h1 { font-size: 22px; }
+  .nav-logo { font-size: 16px; }
+  .nav-logo img { width: 24px; height: 24px; }
 }
 </style>
 </head>
 <body>
+
+<!-- NAV -->
 <nav>
 <a class="nav-logo" href="index.html">
 <img src="asa-logo-480.png" alt="Arasaka">
@@ -144,6 +306,20 @@ Darkness<span class="accent">Funny</span>
 <li><a href="https://t.me/The_mink_of_darkness" target="_blank">ТГК</a></li>
 </ul>
 </nav>
+
+<!-- 📱 MOBILE TAB SELECTOR (справа вверху) -->
+<div class="mobile-tab-selector">
+  <select id="mobile-tab-select" class="tab-select">
+    <option value="tab-intro" selected>Введение</option>
+    <option value="tab-rules-discord">Инфа из ТГК и просто</option>
+    <option value="tab-rules-clan">Что любит Дарк и Автор</option>
+    <option value="tab-roles">Роли и звания Дарка</option>
+    <option value="tab-arc">Система званий в саду</option>
+    <option value="tab-roster">Друзья Дарка</option>
+    <option value="tab-join">Система вступления</option>
+    <option value="tab-birthdays">День рождения</option>
+  </select>
+</div>
 
 <div class="wiki-layout">
 <aside class="sidebar">
@@ -174,38 +350,42 @@ Darkness<span class="accent">Funny</span>
 </aside>
 
 <main class="wiki-content">
+    
+    <!-- INTRO -->
+    <div class="tab-pane active" id="tab-intro">
+      <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Введение</span></div>
+      <div class="md-body">
+        <h1>Введение</h1>
 
-  <!-- INTRO -->
-  <div class="tab-pane" id="tab-intro">
-    <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Введение</span></div>
-    <div class="md-body">
-      <h1>Введение</h1>
-
-      <div class="update-banner">
-        <div class="update-icon">🦊</div>
-        <div class="update-text">
-          <div class="update-label">Обновление персонажа</div>
-          <div class="update-desc">Новое тотемное животное персонажа — <strong style="color:var(--white)">Белый лис</strong>. Переработан персонаж добавлены новые разделы вики.</div>
+        <div class="update-banner">
+          <div class="update-icon">🦊</div>
+          <div class="update-text">
+            <div class="update-label">Обновление персонажа</div>
+            <div class="update-desc">Новое тотемное животное персонажа — <strong style="color:var(--white)">Белый лис</strong>. Переработан персонаж, добавлены новые разделы вики.</div>
+          </div>
         </div>
-      </div>
 
-      <p>Добро пожаловать в вики Дарка. Здесь собрана вся необходимая информация — книги, о персонаже, вселенная Дарка, ARC и состав.</p>
+        <p>Добро пожаловать в вики Дарка. Здесь собрана вся необходимая информация — книги, о персонаже, вселенная Дарка, ARC и состав.</p>
 
-      <div class="callout">
-        <div class="callout-title">Впервые слышите об о мне?</div>
-        <p>Начните с истории моего персонажа. Затем ознакомьтесь с моей книгой и какие есть версии персонажа.</p>
-      </div>
+        <div class="callout">
+          <div class="callout-title">Впервые слышите обо мне?</div>
+          <p>Начните с истории моего персонажа. Затем ознакомьтесь с моей книгой и какие есть версии персонажа.</p>
+        </div>
 
-      <h2>Навигация по вики</h2>
-      <div class="link-cards">
-        <div class="link-card" data-tab="rules-discord">📋 Инфа из ТГК и просто <span>→</span></div>
-        <div class="link-card" data-tab="rules-clan">🏯 Что любит <span>→</span></div>
-        <div class="link-card" data-tab="roles">🏷️ Роли и звания Дарка в разных мирах<span>→</span></div>
-        <div class="link-card" data-tab="arc">⭐ Система званий в саду воспоминаний <span>→</span></div> 
-        <div class="link-card" data-tab="roster">👥 Друзья Дарка <span>→</span></div>
-        <div class="link-card new-card" data-tab="join">📝 Система вступления <span>→</span></div>
-        <div class="link-card new-card" data-tab="birthdays">🎂 День рождения Дарка и автора<span>→</span></div>
-      </div>
+        <h2>Навигация по вики</h2>
+        <div class="link-cards">
+          <div class="link-card" data-tab="tab-rules-discord">📋 Инфа из ТГК и просто <span>→</span></div>
+          <div class="link-card" data-tab="tab-rules-clan">🏯 Что любит <span>→</span></div>
+          <div class="link-card" data-tab="tab-roles">🏷️ Роли и звания Дарка в разных мирах <span>→</span></div>
+          <div class="link-card" data-tab="tab-arc">⭐ Система званий в саду воспоминаний <span>→</span></div> 
+          <div class="link-card" data-tab="tab-roster">👥 Друзья Дарка <span>→</span></div>
+          <div class="link-card new-card" data-tab="tab-join">📝 Система вступления <span>→</span></div>
+          <div class="link-card new-card" data-tab="tab-birthdays">🎂 День рождения Дарка и автора <span>→</span></div>
+        </div>
+
+        <h2>О Первой книге</h2>
+        <p>«Дарк Кроу: начало» — это моя первая книга, которая была выпущена на энтузиазме, и один из моих первых читателей сказал, что это прикольно.</p>
+        <p>Описание книги: Обычный парень Хан встречает своего тёмного двойника, попадает в другой мир и узнаёт, что он — падший бог-Демиург. Вместе с девушкой Кариной и армией изгнанников (включая Ктулху) он сражается с собственным безумием, древними монстрами и силами Пустоты, чтобы обрести равновесие и вернуться домой.</p>
 
       <h2>О Первой книги</h2>
       <p>Дарк Кроу начало — это моя первая книга которая была выпушена на энтузиазме и один из моих первых читателей сказал что это прикольно.</p>
@@ -215,146 +395,112 @@ Darkness<span class="accent">Funny</span>
     </div>
   </div>
 
-  <!-- MD-loaded tabs -->
-  <div class="tab-pane" id="tab-rules-discord">
-    <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Инфа из ТГК и просто</span></div>
-    <div class="md-body loading" id="content-rules-discord">Загрузка...</div>
-  </div>
 
-  <div class="tab-pane" id="tab-rules-clan">
-    <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Что любит Дарк и Автор</span></div>
-    <div class="md-body loading" id="content-rules-clan">Загрузка...</div>
-  </div>
+    <!-- OTHER TABS -->
+    <div class="tab-pane" id="tab-rules-discord">
+      <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Инфа из ТГК и просто</span></div>
+      <div class="md-body loading" id="content-rules-discord">Загрузка...</div>
+    </div>
 
-  <div class="tab-pane" id="tab-join">
-    <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Система вступления</span></div>
-    <div class="md-body loading" id="content-join">Загрузка...</div>
-  </div>
+    <div class="tab-pane" id="tab-rules-clan">
+      <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Что любит Дарк и Автор</span></div>
+      <div class="md-body loading" id="content-rules-clan">Загрузка...</div>
+    </div>
 
-  <div class="tab-pane" id="tab-birthdays">
-    <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>День рождения Дарка и автора</span></div>
-    <div class="md-body loading" id="content-birthdays">Загрузка...</div>
-  </div>
+    <div class="tab-pane" id="tab-join">
+      <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Система вступления</span></div>
+      <div class="md-body loading" id="content-join">Загрузка...</div>
+    </div>
 
-  <div class="tab-pane" id="tab-roles">
-    <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Роли Дарка</span></div>
-    <div class="md-body loading" id="content-roles">Загрузка...</div>
-  </div>
+    <div class="tab-pane" id="tab-birthdays">
+      <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>День рождения Дарка и автора</span></div>
+      <div class="md-body loading" id="content-birthdays">Загрузка...</div>
+    </div>
 
-  <div class="tab-pane" id="tab-arc">
-    <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Система званий в саду воспоминаний</span></div>
-    <div class="md-body loading" id="content-arc">Загрузка...</div>
-  </div>
+    <div class="tab-pane" id="tab-roles">
+      <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Роли Дарка</span></div>
+      <div class="md-body loading" id="content-roles">Загрузка...</div>
+    </div>
 
-  <div class="tab-pane" id="tab-roster">
-    <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Друзья Дарка</span></div>
-    <div class="md-body loading" id="content-roster">Загрузка...</div>
-  </div>
+    <div class="tab-pane" id="tab-arc">
+      <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Система званий в саду воспоминаний</span></div>
+      <div class="md-body loading" id="content-arc">Загрузка...</div>
+    </div>
 
-</main>
+    <div class="tab-pane" id="tab-roster">
+      <div class="breadcrumb"><a href="index.html">DarknessFunny</a> › <span>Друзья Дарка</span></div>
+      <div class="md-body loading" id="content-roster">Загрузка...</div>
+    </div>
 
-<aside class="toc">
-  <div class="toc-title">На этой странице</div>
-  <ul class="toc-list" id="toc-list"></ul>
-</aside>
+  </main>
+
+  <!-- TOC -->
+  <aside class="toc">
+    <div class="toc-title">На этой странице</div>
+    <ul class="toc-list" id="toc-list"></ul>
+  </aside>
+
 </div>
 
+<!-- FOOTER -->
 <footer>
-<div class="footer-logo">
-  <img src="asa-logo-480.png" alt="Arasaka">
-  Darkness<span class="accent">Funny</span
-</div>
-<ul class="footer-nav">
-  <li><a href="index.html">Главная</a></li>
-  <li><a href="wiki.html">Вики</a></li>
-  <li><a href="https://t.me/The_mink_of_darkness" target="_blank">ТГК</a></li>
-</ul>
+  <div class="footer-logo">
+    <img src="asa-logo-480.png" alt="Arasaka">
+    Darkness<span class="accent">Funny</span>
+  </div>
+  <ul class="footer-nav">
+    <li><a href="index.html">Главная</a></li>
+    <li><a href="wiki.html">Вики</a></li>
+    <li><a href="https://t.me/The_mink_of_darkness" target="_blank">ТГК</a></li>
+  </ul>
 </footer>
 
+<!-- SCRIPTS -->
 <script>
-const MD_FILES = {
-  'rules-discord': 'discord.md',
-  'rules-clan':    'clan.md',
-  'join':          'join.md',
-  'birthdays':     'birthday.md',
-  'roles':         'roles.md',
-  'arc':           'arc.md',
-  'roster':        'roster.md'
-};
+document.addEventListener('DOMContentLoaded', () => {
+  const tabLinks = document.querySelectorAll('[data-tab]');
+  const tabPanes = document.querySelectorAll('.tab-pane');
+  const sbLinks = document.querySelectorAll('.sb-link');
+  const mobileSelect = document.getElementById('mobile-tab-select');
 
-const loaded = {};
-marked.setOptions({ breaks: true, gfm: true });
-
-async function loadMD(tab) {
-  if (loaded[tab] || !MD_FILES[tab]) return;
-  try {
-    const r = await fetch(MD_FILES[tab]);
-    if (!r.ok) throw new Error('404');
-    const text = await r.text();
-    const el = document.getElementById('content-' + tab);
-    if (el) {
-      el.classList.remove('loading');
-      el.innerHTML = marked.parse(text);
-      addHeadingIds(el);
-      loaded[tab] = true;
+  function activateTab(tabId) {
+    // Скрыть все вкладки
+    tabPanes.forEach(pane => pane.classList.remove('active'));
+    // Показать нужную
+    const target = document.getElementById(tabId);
+    if (target) target.classList.add('active');
+    
+    // Обновить активный класс в сайдбаре
+    sbLinks.forEach(link => {
+      link.classList.toggle('active', link.dataset.tab === tabId);
+    });
+    
+    // Обновить select на мобильном
+    if (mobileSelect) mobileSelect.value = tabId;
+    
+    // Скролл вверх на мобильном
+    if (window.innerWidth < 960) {
+      document.querySelector('.wiki-content')?.scrollIntoView({ behavior: 'smooth' });
     }
-  } catch(e) {
-    const el = document.getElementById('content-' + tab);
-    if (el) el.innerHTML = '<p style="color:var(--gray-dim)">Не удалось загрузить файл.</p>';
   }
-}
 
-function addHeadingIds(el) {
-  el.querySelectorAll('h2, h3').forEach(h => {
-    if (!h.id) h.id = h.textContent.trim().toLowerCase().replace(/[^а-яёa-z0-9]+/gi, '-').replace(/^-|-$/g,'');
+  // Клик по карточкам и ссылкам сайдбара
+  tabLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tabId = link.dataset.tab;
+      if (tabId) activateTab(tabId);
+    });
   });
-}
 
-function showTab(tabId) {
-  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.sb-link').forEach(a => a.classList.remove('active'));
-  const pane = document.getElementById('tab-' + tabId);
-  if (pane) pane.classList.add('active');
-  document.querySelectorAll('.sb-link').forEach(a => {
-    if (a.dataset.tab === tabId) a.classList.add('active');
-  });
-  loadMD(tabId).then(() => {
-    buildTOC(tabId);
-    if (MD_ANCHOR[tabId]) {
-      const target = document.getElementById('content-' + tabId)?.querySelector('#' + MD_ANCHOR[tabId]);
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    }
-  });
-  buildTOC(tabId);
-  window.scrollTo({ top: 0 });
-  history.replaceState(null, '', '#' + tabId);
-}
-
-function buildTOC(tabId) {
-  const pane = document.getElementById('tab-' + tabId);
-  const list = document.getElementById('toc-list');
-  list.innerHTML = '';
-  if (!pane) return;
-  pane.querySelectorAll('h2[id], h3[id]').forEach(h => {
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.href = '#' + h.id;
-    a.textContent = h.textContent;
-    if (h.tagName === 'H3') a.classList.add('toc-h3');
-    a.addEventListener('click', e => { e.preventDefault(); h.scrollIntoView({ behavior: 'smooth' }); });
-    li.appendChild(a);
-    list.appendChild(li);
-  });
-}
-
-document.addEventListener('click', e => {
-  const el = e.target.closest('[data-tab]');
-  if (el) { e.preventDefault(); showTab(el.dataset.tab); }
+  // Мобильный селектор
+  if (mobileSelect) {
+    mobileSelect.addEventListener('change', (e) => {
+      activateTab(e.target.value);
+    });
+  }
 });
-
-const hash = location.hash.replace('#', '') || 'intro';
-const validTabs = ['intro','rules-discord','rules-clan','join','birthdays','roles','arc','roster'];
-showTab(validTabs.includes(hash) ? hash : 'intro');
 </script>
+
 </body>
 </html>
