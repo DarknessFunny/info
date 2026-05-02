@@ -1,2 +1,2 @@
-# asa
-https://webe132.github.io/home/
+# INFO
+https://darknessfunny.github.io/info/
